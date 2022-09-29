@@ -1,4 +1,4 @@
-//import React, { useState } from "react";
+import React from "react";
 
 function Transaction({
   id,
@@ -8,9 +8,9 @@ function Transaction({
   amount,
   setTransaction,
 }) {
-  // const [data, setData]=useState({date:"",description(""),category(""),amount(0)});
+  
   function handleData(e) {
-    // setData((data))
+   
     console.log(e);
     fetch(`http://localhost:8001/transactions/${id}`, {
       method: "DELETE",
@@ -21,7 +21,7 @@ function Transaction({
       });
     });
   }
-  //let dataPresent=data.map((elem,index)=>{
+  
   return (
     <tr onClick={handleData}>
       <td>{date}</td>

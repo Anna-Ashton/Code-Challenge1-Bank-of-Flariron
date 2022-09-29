@@ -6,7 +6,7 @@ import AddTransactionForm from "./AddTransactionForm";
 function AccountContainer() {
   const [transactions, setTransaction] = useState([]);
   const[newTransaction, setNewTransaction] = useState([]);
-  //const[initial, setInitial]=useState[0]
+  
   useEffect(() => {
     fetch("http://localhost:8001/transactions")
       .then((res) => res.json())
@@ -19,24 +19,27 @@ function AccountContainer() {
   }, []);
   console.log(transactions);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8001/transactions")
-  //     .then((res) => res.json())
-  //     .then((result) => setTransaction((transactions) => result))
-  //     .catch((err) => console.log(err));
-  // }, []);
+  function handleSort(e) {
+    let criteria = e.target.textContent.toLowerCase();
+    function findDiff( a, b ) {
+      if ( a[criteria].toLowerCase() < b[criteria].toLowerCase() ){
+        return -1;
+      }
+      if ( a[criteria].toLowerCase() > b[criteria].toLowerCase() ){
+        return 1;
+      }
+      return 0;
+    }
+    console.log("Hello")
 
-  // let haveListTransact=transAct.map((transfer)=>{
-  //   return(
-  //     <tr key={index}>{transfer}</tr>
-  //   )
-  // })
-
+    setTransaction([...transactions.sort( findDiff )]);
+  }
   return (
     <div>
       <Search newTransaction={newTransaction} setTransaction={setTransaction}/>
       <AddTransactionForm setTransaction={setTransaction}/>
-      <TransactionsList transactions={transactions} setTransaction={setTransaction}></TransactionsList>
+      <TransactionsList transactions={transactions} handleSort={handleSort} setTransaction={setTransaction}
+    ></TransactionsList>
     </div>
   );
 }
